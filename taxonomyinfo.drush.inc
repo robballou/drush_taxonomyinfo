@@ -54,6 +54,6 @@ function drush_taxonomyinfo_terms($vocab) {
  */
 function drush_taxonomyinfo_vocab() {
   $vocabs = taxonomy_get_vocabularies();
-  $vocab_info = array_map('drush_taxonomyinfo_log_vocab', $vocabs);
+  $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $vocabs);
   return drush_print_table($vocab_info);
 }
