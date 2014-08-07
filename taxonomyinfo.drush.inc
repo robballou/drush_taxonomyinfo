@@ -32,6 +32,15 @@ function taxonomyinfo_drush_command() {
 }
 
 /**
+ * Log the vocabulary info
+ *
+ * @see drush_taxonomyinfo_vocab
+ */
+function drush_taxonomyinfo_log_vocab($vocab) {
+  drush_log('- ' . $vocab->name . ' [' . $vocab->machine_name . '] (vid ' . $vocab->vid . ')', 'ok');
+}
+
+/**
  * List fields in an entity/bundle
  *
  * @param mixed $vocab
@@ -45,5 +54,5 @@ function drush_taxonomyinfo_terms($vocab) {
  */
 function drush_taxonomyinfo_vocab() {
   $vocabs = taxonomy_get_vocabularies();
-  var_dump($vocabs);
+  array_map('drush_taxonomyinfo_log_vocab', $vocabs);
 }
