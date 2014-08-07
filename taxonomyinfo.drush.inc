@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * Implements hook_drush_command().
+ *
+ * Register the typeinfo command(s)
+ */
+function typeinfo_drush_command() {
+  $commands = array();
+
+  $commands['taxonomyinfo-vocab-list'] = array(
+    'callback' => 'drush_taxonomyinfo_vocab',
+    'description' => 'Show vocabularies',
+    'aliases' => array('tvl'),
+    'examples' => array(
+      'drush taxonomyinfo-vocab-list' => 'List vocabularies',
+    ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
+  );
+
+  $commands['taxonomyinfo-term-list'] = array(
+    'callback' => 'drush_taxonomyinfo_terms',
+    'description' => 'Show terms in a vocabulary',
+    'aliases' => array('ttl'),
+    'examples' => array(
+      'drush taxonomyinfo-term-list [vocabualary name]' => 'List all terms for a vocabulary',
+    ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
+  );
+
+  return $commands;
+}
+
+/**
+ * List fields in an entity/bundle
+ *
+ * @param mixed $vocab
+ *   The vocabulary name or vid
+ */
+function drush_taxonomyinfo_terms($vocab) {
+}
+
+/**
+ * List all vocabularies
+ */
+function drush_taxonomyinfo_vocab() {
+  $vocabs = taxonomy_get_vocabularies();
+  var_dump($vocabs);
+}
