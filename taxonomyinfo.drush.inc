@@ -5,7 +5,7 @@
  *
  * Register the typeinfo command(s)
  */
-function typeinfo_drush_command() {
+function taxonomyinfo_drush_command() {
   $commands = array();
 
   $commands['taxonomyinfo-vocab-list'] = array(
