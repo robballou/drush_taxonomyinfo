@@ -32,6 +32,13 @@ function taxonomyinfo_drush_command() {
 }
 
 /**
+ * Check if this is machine name
+ */
+function drush_taxonomyinfo_is_machine_name($vocab) {
+  return is_string($vocab) && !is_numeric($vocab);
+}
+
+/**
  * Log the vocabulary info
  *
  * @see drush_taxonomyinfo_vocab
@@ -47,6 +54,15 @@ function drush_taxonomyinfo_process_vocab($vocab) {
  *   The vocabulary name or vid
  */
 function drush_taxonomyinfo_terms($vocab) {
+  if (drush_taxonomyinfo_is_machine_name($vocab)) {
+    $vocab = taxonomy_vocabulary_machine_name_load($vocab);
+  }
+  else {
+    $vocab = taxonomy_vocabulary_load(intval($vocab));
+  }
+
+  $terms = taxonomy_get_tree($vocab->vid);
+  var_dump($terms);
 }
 
 /**
