@@ -62,7 +62,9 @@ function drush_taxonomyinfo_terms($vocab) {
   }
 
   $terms = taxonomy_get_tree($vocab->vid);
-  var_dump($terms);
+  foreach ($terms as $term) {
+    drush_log('name: ' . $term->name, 'ok');
+  }
 }
 
 /**
