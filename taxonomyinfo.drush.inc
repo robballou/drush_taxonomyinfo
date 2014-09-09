@@ -63,7 +63,8 @@ function drush_taxonomyinfo_terms($vocab) {
 
   $terms = taxonomy_get_tree($vocab->vid);
   foreach ($terms as $term) {
-    drush_log('- [' . $term->tid . '] ' . $term->name, 'ok');
+    $leading_spaces = str_repeat('  ', $term->depth);
+    drush_log($leading_spaces . '- [' . $term->tid . '] ' . $term->name, 'ok');
   }
 }
 
