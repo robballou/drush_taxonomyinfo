@@ -54,6 +54,10 @@ function drush_taxonomyinfo_process_vocab($vocab) {
  *   The vocabulary name or vid
  */
 function drush_taxonomyinfo_terms($vocab) {
+  if (!$vocab) {
+    drush_log(dt('Specify a vocabulary'), 'error');
+    return FALSE;
+  }
   if (drush_taxonomyinfo_is_machine_name($vocab)) {
     $vocab = taxonomy_vocabulary_machine_name_load($vocab);
   }
