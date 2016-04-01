@@ -78,6 +78,6 @@ function drush_taxonomyinfo_terms($vocab) {
 function drush_taxonomyinfo_vocab() {
   $vocabs = taxonomy_vocabulary_get_names();
   $load = taxonomy_vocabulary_load_multiple(array_keys($vocabs));
-  $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $vocab_info);
+  $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $load);
   return drush_print_table($vocab_info);
 }
