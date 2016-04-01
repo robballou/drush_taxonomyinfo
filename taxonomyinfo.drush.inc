@@ -76,9 +76,9 @@ function drush_taxonomyinfo_terms($vocab) {
  * List all vocabularies
  */
 function drush_taxonomyinfo_vocab() {
-  $vocabs = \Drupal::entityQuery('taxonomy_vocabulary')->execute();
+  $vocabs = taxonomy_vocabulary_get_names();
   var_dump($vocabs);
-  // $vocabs = taxonomy_get_vocabularies();
+  // $vocabs = \Drupal::entityQuery('taxonomy_vocabulary')->execute();
   // $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $vocabs);
   // return drush_print_table($vocab_info);
 }
