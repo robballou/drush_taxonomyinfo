@@ -58,7 +58,6 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
     drush_log(dt('Specify a vocabulary'), 'error');
     return FALSE;
   }
-  $vocab = taxonomy_vocabulary_load($vocab);
   $terms = \Drupal::entityQuery('taxonomy_term')
     ->condition('vid', $vocab)
     ->execute();
