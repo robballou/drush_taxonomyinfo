@@ -53,18 +53,12 @@ function drush_taxonomyinfo_process_vocab($vocab) {
  * @param mixed $vocab
  *   The vocabulary name or vid
  */
-function drush_taxonomyinfo_terms($vocab) {
+function drush_taxonomyinfo_terms($vocab = NULL) {
   if (!$vocab) {
     drush_log(dt('Specify a vocabulary'), 'error');
     return FALSE;
   }
-  if (drush_taxonomyinfo_is_machine_name($vocab)) {
-    $vocab = taxonomy_vocabulary_machine_name_load($vocab);
-  }
-  else {
-    $vocab = taxonomy_vocabulary_load(intval($vocab));
-  }
-
+  $vocab = taxonomy_vocabulary_load($vocab);
   $terms = taxonomy_get_tree($vocab->vid);
   foreach ($terms as $term) {
     $leading_spaces = str_repeat('  ', $term->depth);
