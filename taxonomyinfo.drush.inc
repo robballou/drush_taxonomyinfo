@@ -51,7 +51,7 @@ function drush_taxonomyinfo_process_vocab($vocab) {
  * List fields in an entity/bundle
  *
  * @param mixed $vocab
- *   The vocabulary name or vid
+ *   The vocabulary name or vid.
  */
 function drush_taxonomyinfo_terms($vocab = NULL) {
   if (!$vocab) {
@@ -59,10 +59,14 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
     return FALSE;
   }
   $vocab = taxonomy_vocabulary_load($vocab);
-  $terms = taxonomy_get_tree($vocab->vid);
-  foreach ($terms as $term) {
-    $leading_spaces = str_repeat('  ', $term->depth);
-    drush_log($leading_spaces . '- [' . $term->tid . '] ' . $term->name, 'ok');
+  $terms = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', $vocab)
+    ->execute();
+  foreach (array_keys($terms) as $term) {
+    $this_term = taxonomy_term_load($term);
+    $leading_spaces = '';
+    // $leading_spaces = str_repeat('  ', $term->depth);
+    drush_log($leading_spaces . '- [' . $this_term->id() . '] ' . $this_term->label(), 'ok');
   }
 }
 
