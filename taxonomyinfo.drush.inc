@@ -44,7 +44,7 @@ function drush_taxonomyinfo_is_machine_name($vocab) {
  * @see drush_taxonomyinfo_vocab
  */
 function drush_taxonomyinfo_process_vocab($vocab) {
-  return array($vocab->id(), $vocab->name());
+  return array($vocab->id(), $vocab->label());
 }
 
 /**
