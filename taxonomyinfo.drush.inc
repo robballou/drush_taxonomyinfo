@@ -62,7 +62,7 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
     ->condition('vid', $vocab)
     ->execute();
   if (empty($terms)) {
-    drush_log(dt('No terms in this vocabulary'), 'notice');
+    drush_log(dt('No terms in this vocabulary'), 'ok');
     return;
   }
   foreach (array_keys($terms) as $term) {
