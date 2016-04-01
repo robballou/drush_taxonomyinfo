@@ -61,6 +61,10 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
   $terms = \Drupal::entityQuery('taxonomy_term')
     ->condition('vid', $vocab)
     ->execute();
+  if (empty($terms)) {
+    drush_log(dt('No terms in this vocabulary'), 'notice');
+    return;
+  }
   foreach (array_keys($terms) as $term) {
     $this_term = taxonomy_term_load($term);
     $leading_spaces = '';
