@@ -44,7 +44,7 @@ function drush_taxonomyinfo_is_machine_name($vocab) {
  * @see drush_taxonomyinfo_vocab
  */
 function drush_taxonomyinfo_process_vocab($vocab) {
-  return [$vocab->id(), $vocab->label()];
+  return [$vocab, $vocab->label()];
 }
 
 /**
@@ -77,8 +77,13 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
  * List all vocabularies
  */
 function drush_taxonomyinfo_vocab() {
-  $vocabs = \Drupal::entityTypeManager()->getDefinition('taxonomy_term');
-  var_dump(entity_get_bundles('taxonomy_term'));
-  $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $vocabs);
+  $vocabs = entity_get_bundles('taxonomy_term');
+  $vocab_info = [];
+  foreach ($vocabs as $machine_name => $info) {
+    $vocab_info[] = [$machine_name, $info['label']];
+  }
+  usort($vocab_info, function ($a, $b) {
+    return strcmp($a[0], $b[0]);
+  });
   return drush_print_table($vocab_info);
 }
