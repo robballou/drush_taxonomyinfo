@@ -78,7 +78,7 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
  */
 function drush_taxonomyinfo_vocab() {
   $vocabs = \Drupal::entityTypeManager()->getDefinition('taxonomy_term');
-  var_dump($vocabs->getBundles());
+  var_dump(entity_get_bundles('taxonomy_term'));
   $vocab_info = array_map('drush_taxonomyinfo_process_vocab', $vocabs);
   return drush_print_table($vocab_info);
 }
