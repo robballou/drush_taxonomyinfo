@@ -6,27 +6,32 @@
  * Register the typeinfo command(s)
  */
 function taxonomyinfo_drush_command() {
-  $commands = array();
+  $commands = [];
 
-  $commands['taxonomyinfo-vocab-list'] = array(
+  $commands['taxonomyinfo-vocab-list'] = [
     'callback' => 'drush_taxonomyinfo_vocab',
     'description' => 'Show vocabularies',
-    'aliases' => array('tvl'),
-    'examples' => array(
+    'aliases' => ['tvl'],
+    'examples' => [
       'drush taxonomyinfo-vocab-list' => 'List vocabularies',
-    ),
+    ],
     'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
-  );
+  ];
 
-  $commands['taxonomyinfo-term-list'] = array(
+  $commands['taxonomyinfo-term-list'] = [
     'callback' => 'drush_taxonomyinfo_terms',
     'description' => 'Show terms in a vocabulary',
-    'aliases' => array('ttl'),
-    'examples' => array(
+    'aliases' => ['ttl'],
+    'options' => [
+      'ids' => [
+        'description' => 'List of ids',
+      ],
+    ],
+    'examples' => [
       'drush taxonomyinfo-term-list [vocabualary name]' => 'List all terms for a vocabulary',
-    ),
+    ],
     'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
-  );
+  ];
 
   return $commands;
 }
@@ -65,7 +70,13 @@ function drush_taxonomyinfo_terms($vocab = NULL) {
     drush_log(dt('No terms in this vocabulary'), 'ok');
     return;
   }
+
+  $ids = drush_get_option('ids', []);
+
   foreach (array_keys($terms) as $term) {
+    if ($ids && !in_array($term, $ids)) {
+      continue;
+    }
     $this_term = taxonomy_term_load($term);
     $leading_spaces = '';
     // $leading_spaces = str_repeat('  ', $term->depth);
